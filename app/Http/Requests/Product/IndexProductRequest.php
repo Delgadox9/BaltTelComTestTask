@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Product;
 
+use app\DTO\Products\IndexProductDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest
+class IndexProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,12 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'page' => ['integer', 'min:1', 'required'],
         ];
+    }
+
+    public function getDTO(): IndexProductDTO
+    {
+        return IndexProductDTO::fromArray($this->validated());
     }
 }

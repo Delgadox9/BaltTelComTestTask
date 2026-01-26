@@ -27,6 +27,11 @@ class Product extends Model
         'category_id',
     ];
 
+    protected $casts = [
+        'price' => 'double',
+        'category_id' => 'integer',
+    ];
+
     public function category(): belongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
