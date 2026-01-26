@@ -2,7 +2,7 @@
 
 namespace App\Actions\API\Product;
 
-use app\DTO\Products\IndexProductDTO;
+use App\DTO\Product\IndexProductDTO;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 

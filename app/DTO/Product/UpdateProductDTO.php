@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\DTO\Products;
+namespace App\DTO\Product;
 
 use App\Http\Requests\Product\UpdateProductRequest;
 

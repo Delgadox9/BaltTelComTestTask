@@ -2,7 +2,7 @@
 
 namespace App\Actions\API\Product;
 
-use app\DTO\Products\DeleteProductDTO;
+use App\DTO\Product\DeleteProductDTO;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 

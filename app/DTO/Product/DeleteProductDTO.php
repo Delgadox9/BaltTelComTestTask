@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace app\DTO\Products;
+namespace App\DTO\Product;
 
 use Illuminate\Support\Arr;
 
-final readonly class ShowProductDTO
+final readonly class DeleteProductDTO
 {
     public function __construct(
         public int $id,

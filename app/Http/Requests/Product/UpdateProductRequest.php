@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use app\DTO\Products\UpdateProductDTO;
+use App\DTO\Product\UpdateProductDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductRequest extends FormRequest

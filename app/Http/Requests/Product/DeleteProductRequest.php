@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use app\DTO\Products\DeleteProductDTO;
+use App\DTO\Product\DeleteProductDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteProductRequest extends FormRequest

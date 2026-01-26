@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use app\DTO\Products\ShowProductDTO;
+use App\DTO\Product\ShowProductDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ShowProductRequest extends FormRequest

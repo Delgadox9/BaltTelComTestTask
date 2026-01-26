@@ -2,7 +2,7 @@
 
 namespace App\Actions\API\Product;
 
-use app\DTO\Products\CreateProductDTO;
+use App\DTO\Product\CreateProductDTO;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace app\Http\Requests\Category;
 
-use App\DTO\Product\CreateProductDTO;
+use App\DTO\Category\IndexCategoryDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductRequest extends FormRequest
+class IndexCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,12 @@ class CreateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'category_id' => 'integer|required|exists:categories,id',
+            'page' => ['integer', 'min:1', 'required'],
         ];
     }
 
-    public function getDTO(): CreateProductDTO
+    public function getDTO(): IndexCategoryDTO
     {
-        return CreateProductDTO::fromArray($this->validated());
+        return IndexCategoryDTO::fromArray($this->validated());
     }
 }

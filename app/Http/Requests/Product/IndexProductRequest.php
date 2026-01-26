@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use app\DTO\Products\IndexProductDTO;
+use App\DTO\Product\IndexProductDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexProductRequest extends FormRequest

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace app\DTO\Products;
+namespace App\DTO\Category;
 
 use Illuminate\Support\Arr;
 
-final readonly class DeleteProductDTO
+final readonly class IndexCategoryDTO
 {
     public function __construct(
-        public int $id,
+        public int $page,
     ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
-            (int) Arr::get($data, 'id', 1),
+            (int) Arr::get($data, 'page', 1),
         );
     }
 }

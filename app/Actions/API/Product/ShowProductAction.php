@@ -2,7 +2,7 @@
 
 namespace App\Actions\API\Product;
 
-use app\DTO\Products\ShowProductDTO;
+use App\DTO\Product\ShowProductDTO;
 use App\Models\Product;
 
 final class ShowProductAction
