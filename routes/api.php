@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'login'])->name('api.login');
 // Рут выключен поскольку не требуется по ТЗ
 // Route::post('register', [AuthController::class, 'register'])->name('register');
 
@@ -19,7 +19,7 @@ Route::get('products/{product}', [ProductsController::class, 'show'])->name('pro
 Route::apiResource('categories', CategoriesController::class)->only(['index']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
 
     Route::apiResource('products', ProductsController::class)->only(['update']);
     Route::delete('products/{product}', [ProductsController::class, 'delete'])->name('products.delete');
