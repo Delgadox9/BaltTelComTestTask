@@ -9,6 +9,6 @@ final class ShowProductAction
 {
     public function execute(ShowProductDTO $dto): Product
     {
-        return Product::find($dto->id);
+        return Product::where('id', '=', $dto->id)->first();
     }
 }

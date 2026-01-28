@@ -15,7 +15,7 @@ final readonly class ShowProductDTO
     public static function fromArray(array $data): self
     {
         return new self(
-            (int) Arr::get($data, 'id', 1),
+            (int) Arr::get($data, 'product', 1),
         );
     }
 }

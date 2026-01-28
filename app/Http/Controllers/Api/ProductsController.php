@@ -19,11 +19,11 @@ class ProductsController extends \App\Http\Controllers\Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexProductRequest $request, GetProductsAction $action): \Illuminate\Http\Response
+    public function index(IndexProductRequest $request, GetProductsAction $action): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $products = $action->execute($request->getDTO());
+        $paginator = $action->execute($request->getDTO());
 
-        return response(ProductResource::collection($products));
+        return ProductResource::collection($paginator);
     }
 
     /**
@@ -31,21 +31,21 @@ class ProductsController extends \App\Http\Controllers\Controller
      *
      * @throws \Throwable
      */
-    public function create(CreateProductRequest $request, CreateProductAction $action): \Illuminate\Http\Response
+    public function create(CreateProductRequest $request, CreateProductAction $action): \Illuminate\Http\JsonResponse
     {
         $product = $action->execute($request->getDTO());
 
-        return response(new ProductResource($product));
+        return (new ProductResource($product))->response();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ShowProductRequest $request, ShowProductAction $action): \Illuminate\Http\Response
+    public function show(ShowProductRequest $request, ShowProductAction $action): \Illuminate\Http\JsonResponse
     {
         $product = $action->execute($request->getDTO());
 
-        return response(new ProductResource($product));
+        return (new ProductResource($product))->response();
     }
 
     /**
@@ -53,11 +53,11 @@ class ProductsController extends \App\Http\Controllers\Controller
      *
      * @throws \Throwable
      */
-    public function update(UpdateProductRequest $request, UpdateProductAction $action): \Illuminate\Http\Response
+    public function update(UpdateProductRequest $request, UpdateProductAction $action): \Illuminate\Http\JsonResponse
     {
         $product = $action->execute($request->getDTO());
 
-        return response(new ProductResource($product));
+        return (new ProductResource($product))->response();
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductsController extends \App\Http\Controllers\Controller
      *
      * @throws \Throwable
      */
-    public function delete(DeleteProductRequest $request, DeleteProductAction $action): \Illuminate\Http\Response
+    public function delete(DeleteProductRequest $request, DeleteProductAction $action): \Illuminate\Http\JsonResponse
     {
         return $action->execute($request->getDTO());
     }

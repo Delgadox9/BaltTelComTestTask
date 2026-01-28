@@ -2,17 +2,13 @@
 
 namespace App\Actions\API\Category;
 
-use App\DTO\Category\IndexCategoryDTO;
+use app\Http\Requests\Category\IndexCategoryRequest;
 use App\Models\Category;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 final class GetCategoryAction
 {
-    public function execute(IndexCategoryDTO $dto): LengthAwarePaginator
+    public function execute(IndexCategoryRequest $request): array|\Illuminate\Database\Eloquent\Collection
     {
-        return Category::query()->paginate(
-            perPage: 10,
-            page: $dto->page
-        );
+        return Category::all();
     }
 }

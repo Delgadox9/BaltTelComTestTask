@@ -23,12 +23,7 @@ class IndexCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => ['integer', 'min:1', 'required'],
+            //
         ];
-    }
-
-    public function getDTO(): IndexCategoryDTO
-    {
-        return IndexCategoryDTO::fromArray($this->validated());
     }
 }

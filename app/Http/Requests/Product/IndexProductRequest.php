@@ -23,12 +23,13 @@ class IndexProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => ['integer', 'min:1', 'required'],
+            'page' => 'integer|min:1|required',
+            'search' => 'integer|nullable',
         ];
     }
 
     public function getDTO(): IndexProductDTO
     {
-        return IndexProductDTO::fromArray($this->validated());
+        return IndexProductDTO::fromRequest($this);
     }
 }

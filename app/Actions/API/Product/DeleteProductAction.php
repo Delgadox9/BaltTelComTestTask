@@ -11,14 +11,18 @@ final class DeleteProductAction
     /**
      * @throws \Throwable
      */
-    public function execute(DeleteProductDTO $dto): \Illuminate\Http\Response
+    public function execute(DeleteProductDTO $dto): \Illuminate\Http\JsonResponse
     {
         return DB::transaction(function () use ($dto) {
             if (Product::find($dto->id)->delete()) {
-                return response('Продукт успешно удален');
+                return response([
+                    'message' => 'Продукт успешно удален',
+                ])->json();
             }
 
-            return response('Ошибка при удаление продукта', 500);
+            return response([
+                'message' => 'Ошибка при удаление продукта',
+            ], 500)->json();
         });
     }
 }

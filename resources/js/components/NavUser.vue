@@ -11,9 +11,10 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 import UserInfo from '@/components/UserInfo.vue';
-import { usePage } from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import { ChevronsUpDown } from 'lucide-vue-next';
 import UserMenuContent from './UserMenuContent.vue';
+import { login } from '@/routes';
 
 const page = usePage();
 const user = page.props.auth.user;
@@ -23,7 +24,7 @@ const { isMobile, state } = useSidebar();
 <template>
     <SidebarMenu>
         <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu v-if="user">
                 <DropdownMenuTrigger as-child>
                     <SidebarMenuButton
                         size="lg"
@@ -49,6 +50,15 @@ const { isMobile, state } = useSidebar();
                     <UserMenuContent :user="user" />
                 </DropdownMenuContent>
             </DropdownMenu>
+            <Link
+                as-child
+                v-else
+                class="block w-full cursor-pointer"
+                :href="login()"
+                as="button"
+            >
+                Авторизоваться
+            </Link>
         </SidebarMenuItem>
     </SidebarMenu>
 </template>

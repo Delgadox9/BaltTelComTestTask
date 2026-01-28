@@ -12,10 +12,10 @@ class CategoriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(IndexCategoryRequest $request, GetCategoryAction $action): \Illuminate\Http\Response
+    public function index(IndexCategoryRequest $request, GetCategoryAction $action): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $categories = $action->execute($request->getDTO());
+        $categories = $action->execute($request);
 
-        return response(CategoryResource::collection($categories));
+        return CategoryResource::collection($categories);
     }
 }
