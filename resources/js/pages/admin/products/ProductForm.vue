@@ -6,7 +6,7 @@ import type { Category } from "@/models/Category";
 const props = defineProps<{
     modelValue: Product
     categories: Category[]
-    errors?: Record<string, string>
+    requestErrors?: Record<string, string>
     submitLabel: string
 }>()
 
