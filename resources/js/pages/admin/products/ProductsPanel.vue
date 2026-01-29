@@ -9,18 +9,31 @@ import type { PaginatedResponse } from "@/models/PaginatedResponse";
 import type { BreadcrumbItem } from "@/types";
 import { index } from '@/routes/admin/products';
 import AppLayout from "@/layouts/AppLayout.vue";
+import ConfirmDialogue from "@/pages/admin/products/ConfirmDialogue.vue";
 
 const products = ref<Product[]>([])
 const categories = ref<Category[]>([])
 const meta = ref<Meta>
 const page = ref(1)
 const selectedCategory = ref('')
+const showConfirm = ref(false)
+const itemToDelete = ref<number | null>(null)
+const itemDeleted = ref(false)
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Управление товарами',
         href: index().url,
     },
 ];
+
+const api = axios.create({
+    baseURL: 'http://localhost:80',
+    withCredentials: true,
+    withXSRFToken: true,
+    headers: {
+        'Accept': 'application/json',
+    },
+});
 
 const fetchProducts = async () => {
     const { data } = await axios.get<PaginatedResponse<Product>>('/api/products', {
@@ -32,6 +45,7 @@ const fetchProducts = async () => {
 
     products.value = data.data
     meta.value = data.meta
+    itemDeleted.value = false
 }
 
 const fetchCategories = async () => {
@@ -39,7 +53,7 @@ const fetchCategories = async () => {
     categories.value = data
 }
 
-watch([page, selectedCategory], fetchProducts, { immediate: true })
+watch([page, selectedCategory, itemDeleted], fetchProducts, { immediate: true })
 
 const goToDetail = (id: number) => {
     router.get(`/admin/products/${id}`, )
@@ -49,11 +63,43 @@ const goToCreate = () => {
     router.get('/admin/products/create', )
 }
 
+const goToEdit = (id: number) => {
+    router.get(`/admin/products/edit/${id}`, )
+}
+
+const askDeleteProduct = (id: number) => {
+    itemToDelete.value = id
+    showConfirm.value = true
+}
+
+const confirmDelete = async () => {
+    if (!itemToDelete.value) return
+
+    await api.delete(`/api/products/${itemToDelete.value}`);
+    itemDeleted.value = true;
+    showConfirm.value = false;
+    itemToDelete.value = null;
+}
+
+const cancelDelete = () => {
+    showConfirm.value = false
+    itemToDelete.value = null
+}
+
 onMounted(fetchCategories)
 </script>
 
 <template>
     <Head title="Dashboard" />
+    <ConfirmDialogue
+        :show="showConfirm"
+        title="Удалить продукт"
+        message="Вы уверены что хотите удалить этот товар?"
+        confirm-text="Да"
+        cancel-text="Нет"
+        @confirm="confirmDelete"
+        @cancel="cancelDelete"
+    />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-6">
@@ -87,14 +133,32 @@ onMounted(fetchCategories)
                 </thead>
                 <tbody>
                 <tr v-for="product in products" :key="product.id"
-                    class="hover:bg-gray-600 cursor-pointer"
-                    @click="goToDetail(product.id)">
-                    <td class="border px-4 py-2">{{ product.id }}</td>
-                    <td class="border px-4 py-2">{{ product.name }}</td>
-                    <td class="border px-4 py-2">{{ product.category.name }}</td>
-                    <td class="border px-4 py-2">{{ product.description }}</td>
-                    <td class="border px-4 py-2">{{ product.price }}</td>
-                    <td class="border px-4 py-2">{{ product.price }}</td>
+                    class="hover:bg-gray-600 cursor-pointer">
+                    <td class="border px-4 py-2" @click="goToDetail(product.id)">{{ product.id }}</td>
+                    <td class="border px-4 py-2" @click="goToDetail(product.id)">{{ product.name }}</td>
+                    <td class="border px-4 py-2" @click="goToDetail(product.id)">{{ product.category.name }}</td>
+                    <td class="border px-4 py-2" @click="goToDetail(product.id)">{{ product.description }}</td>
+                    <td class="border px-4 py-2" @click="goToDetail(product.id)">{{ product.price }}</td>
+                    <td class="border px-4 py-2">
+                        <button
+                            type="submit"
+                            class="inline-flex items-center rounded-md bg-green-900 px-4 py-2 m-1
+                                font-medium text-white hover:bg-indigo-700 cursor-pointer
+                                disabled:opacity-50 disabled:cursor-not-allowed"
+                            @click="goToEdit(product.id)"
+                        >
+                            Изменить
+                        </button>
+                        <button
+                            type="submit"
+                            class="inline-flex items-center rounded-md bg-red-800 px-4 py-2 m-1
+                                font-medium text-white hover:bg-indigo-700 cursor-pointer
+                                disabled:opacity-50 disabled:cursor-not-allowed"
+                            @click="askDeleteProduct(product.id)"
+                        >
+                            Удалить
+                        </button>
+                    </td>
 
                 </tr>
                 </tbody>

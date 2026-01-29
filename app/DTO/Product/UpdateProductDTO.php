@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace App\DTO\Product;
 
 use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Support\Stringable;
 
 final readonly class UpdateProductDTO
 {
     public function __construct(
         public int $id,
         public ?string $name,
-        public ?string $description,
+        public string|Stringable|null $description,
         public ?float $price,
         public ?int $categoryId,
     ) {}
 
     public static function fromRequest(UpdateProductRequest $request): self
     {
+
         return new self(
             $request->integer('product'),
             $request->input('name'),

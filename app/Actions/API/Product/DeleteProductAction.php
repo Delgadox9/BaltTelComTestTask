@@ -15,14 +15,14 @@ final class DeleteProductAction
     {
         return DB::transaction(function () use ($dto) {
             if (Product::find($dto->id)->delete()) {
-                return response([
+                return response()->json([
                     'message' => 'Продукт успешно удален',
-                ])->json();
+                ]);
             }
 
-            return response([
+            return response()->json([[
                 'message' => 'Ошибка при удаление продукта',
-            ], 500)->json();
+            ], 500]);
         });
     }
 }

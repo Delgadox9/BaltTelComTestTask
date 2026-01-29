@@ -18,7 +18,6 @@ const form = reactive({ ...props.modelValue })
 
 const errors = computed(() => ({
     name: form.name && form.name.trim().length === 0 ? 'Поле названия обязательное' : null,
-    category: form.category && form.category.name ? 'Поле категория обязательное' : null,
     price:
         form.price === null || form.price < 0
             ? 'Поле цена обязательное и должно быть больше 0'
@@ -94,7 +93,7 @@ const submit = () => {
                     Категория
                 </label>
                 <select
-                    v-model="form.category"
+                    v-model="form.category.id"
                     class="w-full rounded-md border border-gray-700 bg-gray-800 text-gray-100
                  focus:border-indigo-500 focus:ring-indigo-500"
                 >

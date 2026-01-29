@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import {usePage} from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3'
 import AppLayout from "@/layouts/AppLayout.vue";
 import type { BreadcrumbItem } from "@/types";
 import type { Product } from "@/models/Product";
@@ -22,15 +22,13 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const id = Number(page.url.split('/').pop())
-
 const product = ref<Product | null>(null)
 const loading = ref(true)
 const loaded = ref(false)
 
 const fetchItem = async () => {
     try {
-        const { data } = await axios.get(`/api/products/${id}`)
+        const { data } = await axios.get(`/api/products/${productId}`)
         product.value = data.data ?? data
         loaded.value = true
     } finally {

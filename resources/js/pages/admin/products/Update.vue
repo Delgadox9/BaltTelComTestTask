@@ -5,10 +5,16 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import type { BreadcrumbItem } from "@/types";
 import type { Product } from "@/models/Product";
 import type { Category } from "@/models/Category";
-import { index, create } from '@/routes/admin/products';
+import { index, edit } from '@/routes/admin/products';
 import ProductForm from "@/pages/admin/products/ProductForm.vue";
-import {router} from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 
+const page = usePage();
+const loading = ref(true);
+const loaded = ref(false);
+const categories = ref<Category[]>([]);
+const product = ref<Product | null>(null);
+const productId = Number(page.url.split('/').pop())
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,14 +22,10 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: index().url,
     },
     {
-        title: 'Создание товара',
-        href: create().url,
+        title: 'Обновление товара',
+        href: edit(productId).url,
     },
 ];
-
-const loading = ref(true);
-const loaded = ref(false);
-const categories = ref<Category[]>([]);
 
 const api = axios.create({
     baseURL: 'http://localhost:80',
@@ -36,11 +38,11 @@ const api = axios.create({
 
 const submit = async (data: any) => {
     try {
-        const response = await api.post('/api/products', {
+        const response = await api.put(`/api/products/${data.id}`, {
             'name': data.name,
             'description': data.description,
             'price': data.price,
-            'category_id': data.category,
+            'category_id': data.category.id,
         });
 
         router.visit('/admin/products/'+response.data.data.id);
@@ -61,7 +63,18 @@ const fetchCategories = async () => {
     }
 }
 
-onMounted(fetchCategories)
+const fetchItem = async () => {
+    try {
+        const { data } = await axios.get(`/api/products/${productId}`)
+        product.value = data.data ?? data
+        loaded.value = true
+    } finally {
+        loading.value = false
+    }
+}
+
+onMounted(fetchCategories);
+onMounted(fetchItem);
 </script>
 
 <template>
@@ -77,11 +90,11 @@ onMounted(fetchCategories)
 
                     <ProductForm
                         :modelValue="{
-                            id: null,
-                            name: null,
-                            description: null,
-                            price: 0,
-                            category: null
+                            id: product.id,
+                            name: product.name,
+                            description: product.description,
+                            price: product.price,
+                            category: product.category
                         }"
                         :categories="categories"
                         :submitLabel="Создать"

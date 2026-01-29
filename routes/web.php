@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('admin/products/create', [\App\Http\Controllers\Admin\ProductsController::class, 'create'])
         ->name('admin.products.create');
 
-    Route::get('admin/products/{product}/edit', [\App\Http\Controllers\Admin\ProductsController::class, 'edit'])
+    Route::get('admin/products/edit/{product}', [\App\Http\Controllers\Admin\ProductsController::class, 'edit'])
         ->name('admin.products.edit');
 
     Route::get('admin/products/{product}', [\App\Http\Controllers\Admin\ProductsController::class, 'show'])
