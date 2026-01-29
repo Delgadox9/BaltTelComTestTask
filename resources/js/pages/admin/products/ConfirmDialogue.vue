@@ -7,7 +7,7 @@ defineProps<{
     cancelText?: string
 }>()
 
-const emit = defineEmits<{
+defineEmits<{
     (e: 'confirm'): void
     (e: 'cancel'): void
 }>()
