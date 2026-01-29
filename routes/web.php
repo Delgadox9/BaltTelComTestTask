@@ -16,9 +16,9 @@ Route::get('dashboard', function () {
 
 require __DIR__.'/settings.php';
 
-Route::get('/', [\app\Http\Controllers\Frontend\ProductsController::class, 'index'])
+Route::get('/', [\App\Http\Controllers\Frontend\ProductsController::class, 'index'])
     ->name('home');
-Route::get('/products/{product}', [\app\Http\Controllers\Frontend\ProductsController::class, 'show'])
+Route::get('/products/{product}', [\App\Http\Controllers\Frontend\ProductsController::class, 'show'])
     ->name('products.show');
 
 Route::middleware('auth:sanctum')->group(function () {
