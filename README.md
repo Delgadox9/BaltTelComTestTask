@@ -34,4 +34,4 @@
 > composer update<br>
 > npm run build
 
- 
+В корне проекта так же лежит коллекция постмана.
