@@ -1,9 +1,9 @@
 import type { Category } from '@/models/Category'
 
 export interface Product {
-    id: number,
-    name: string,
-    description: string,
-    price: number,
-    category: Category
+    id: number | null,
+    name: string | null,
+    description: string | null,
+    price: number | null,
+    category: Category | null
 }

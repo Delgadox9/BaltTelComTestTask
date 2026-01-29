@@ -15,10 +15,12 @@ import {Link, usePage} from '@inertiajs/vue3';
 import { ChevronsUpDown } from 'lucide-vue-next';
 import UserMenuContent from './UserMenuContent.vue';
 import { login } from '@/routes';
+import { computed } from 'vue';
 
 const page = usePage();
-const user = page.props.auth.user;
+const user = computed(() => page.props.auth?.user)
 const { isMobile, state } = useSidebar();
+
 </script>
 
 <template>

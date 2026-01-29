@@ -12,18 +12,35 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { home } from '@/routes';
+import { index } from '@/routes/admin/products';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import { computed } from 'vue';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Продукты',
-        href: home(),
-        icon: LayoutGrid,
-    },
-];
+const page = usePage();
+const user = page.props.auth?.user;
+
+const mainNavItems = computed<NavItem[]>(() => {
+    const items: NavItem[] = [
+        {
+            title: 'Товары',
+            href: home(),
+            icon: LayoutGrid,
+        },
+    ]
+
+    if (user) {
+        items.push({
+            title: 'Панель управления',
+            href: index(),
+            icon: LayoutGrid,
+        })
+    }
+
+    return items
+})
 
 const footerNavItems: NavItem[] = [
     {

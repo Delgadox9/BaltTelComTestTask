@@ -10,7 +10,7 @@ final class GetProductsAction
 {
     public function execute(IndexProductDTO $dto): array|\Illuminate\Pagination\LengthAwarePaginator
     {
-        $query = Product::query()->with('category')->when(
+        $query = Product::query()->with('category')->orderBy('updated_at', 'desc')->when(
             $dto->search, function (Builder $query, int $dto) {
                 $query->where('category_id', '=', $dto);
             }

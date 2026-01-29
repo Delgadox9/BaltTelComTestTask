@@ -6,8 +6,8 @@ import type { Product } from "@/models/Product";
 import type { Category } from "@/models/Category";
 import type { Meta } from "@/models/Meta";
 import type { PaginatedResponse } from "@/models/PaginatedResponse";
-import type {BreadcrumbItem} from "@/types";
-import { home } from '@/routes';
+import type { BreadcrumbItem } from "@/types";
+import { index } from '@/routes/admin/products';
 import AppLayout from "@/layouts/AppLayout.vue";
 
 const products = ref<Product[]>([])
@@ -17,8 +17,8 @@ const page = ref(1)
 const selectedCategory = ref('')
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Список товаров',
-        href: home().url,
+        title: 'Управление товарами',
+        href: index().url,
     },
 ];
 
@@ -42,14 +42,18 @@ const fetchCategories = async () => {
 watch([page, selectedCategory], fetchProducts, { immediate: true })
 
 const goToDetail = (id: number) => {
-    router.get(`/products/${id}`, )
+    router.get(`/admin/products/${id}`, )
+}
+
+const goToCreate = () => {
+    router.get('/admin/products/create', )
 }
 
 onMounted(fetchCategories)
 </script>
 
 <template>
-    <Head title="Товары" />
+    <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-6">
@@ -65,6 +69,10 @@ onMounted(fetchCategories)
                     </option>
                 </select>
             </div>
+            <div class="mb-4 flex items-center gap-4">
+                <button class="px-3 py-1 border rounded hover:bg-gray-600 cursor-pointer"
+                        @click="goToCreate">Добавить товар</button>
+            </div>
 
             <table class="w-full table-auto border-collapse border">
                 <thead class="bg-light-subtle">
@@ -74,6 +82,7 @@ onMounted(fetchCategories)
                     <th class="border px-4 py-2">Категория</th>
                     <th class="border px-4 py-2">Описание</th>
                     <th class="border px-4 py-2">Цена</th>
+                    <th class="border px-4 py-2">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,6 +94,8 @@ onMounted(fetchCategories)
                     <td class="border px-4 py-2">{{ product.category.name }}</td>
                     <td class="border px-4 py-2">{{ product.description }}</td>
                     <td class="border px-4 py-2">{{ product.price }}</td>
+                    <td class="border px-4 py-2">{{ product.price }}</td>
+
                 </tr>
                 </tbody>
             </table>

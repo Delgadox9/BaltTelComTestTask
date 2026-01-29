@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,4 +26,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('products/{product}', [ProductsController::class, 'delete'])->name('api.products.delete');
     Route::post('products', [ProductsController::class, 'create'])->name('api.products.create');
 });
-

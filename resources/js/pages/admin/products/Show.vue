@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import {Head, usePage} from '@inertiajs/vue3'
+import {usePage} from '@inertiajs/vue3'
 import AppLayout from "@/layouts/AppLayout.vue";
 import type { BreadcrumbItem } from "@/types";
 import type { Product } from "@/models/Product";
-import { show } from "@/routes/products";
-import { home } from '@/routes';
+import { index, show } from '@/routes/admin/products';
 
 const page = usePage()
 
@@ -14,11 +13,11 @@ const productId = Number(page.url.split('/').pop())
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Список товаров',
-        href: home().url,
+        title: 'Управление товарами',
+        href: index().url,
     },
     {
-        title: 'Товар ' + productId,
+        title: 'Продукт',
         href: show(productId).url,
     },
 ];
@@ -43,7 +42,6 @@ onMounted(fetchItem)
 </script>
 
 <template>
-    <Head title="Товар"  />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-6 max-w-4xl mx-auto">
             <div v-if="loading" class="text-gray-500">
